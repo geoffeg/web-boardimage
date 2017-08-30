@@ -62,8 +62,9 @@ class Service:
             raise aiohttp.web.HTTPBadRequest(reason="check is not a valid square name")
 
         flipped = request.GET.get("orientation", "white") == "black"
-
-        return chess.svg.board(board, coordinates=False, flipped=flipped, lastmove=lastmove, check=check, size=size, style=self.css)
+        coords  = request.GET.get("coords", "off") == "on"
+            
+        return chess.svg.board(board, coordinates=coords, flipped=flipped, lastmove=lastmove, check=check, size=size, style=self.css)
 
     @asyncio.coroutine
     def render_svg(self, request):
